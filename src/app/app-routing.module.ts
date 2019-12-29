@@ -1,17 +1,15 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {HomeComponent} from './home/home.component';
-import {OrderComponent} from './order/order.component';
+import {OrdersComponent} from './orders/orders.component';
 
 
 const routes: Routes = [
   {
-    path: 'home', component: HomeComponent, children: [
-      {
-        path: 'order/:customerId',
-        component: OrderComponent,
-        data: {hasCustomerId: true}
-      }]
+    path: 'home', component: HomeComponent},
+  {
+    path: 'orders/:customerId/:startDate/:endDate',
+    component: OrdersComponent,
   },
   {path: '', redirectTo: 'home', pathMatch: 'full'},
 ];

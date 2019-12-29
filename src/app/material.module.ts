@@ -19,6 +19,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {FormsModule} from '@angular/forms';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import {FormsModule} from '@angular/forms';
     MatPaginatorModule,
     FormsModule,
     MatFormFieldModule,
+    MatExpansionModule
   ],
   exports: [
     MatButtonModule,
@@ -62,6 +64,7 @@ import {FormsModule} from '@angular/forms';
     MatPaginatorModule,
     FormsModule,
     MatFormFieldModule,
+    MatExpansionModule
   ],
   providers: [
     MatDatepickerModule,

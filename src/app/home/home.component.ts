@@ -1,7 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {CustomerModel} from '../models/customer.model';
 import {ParametersModel} from '../models/parameters.model';
 import {OrderService} from '../services/order.service';
+import {Router} from '@angular/router';
+import {DatePipe} from '@angular/common';
+import {CustomerModel} from '../models/customer.model';
+import {CustomerService} from '../services/customer.service';
 
 @Component({
   selector: 'app-home',
@@ -10,9 +13,10 @@ import {OrderService} from '../services/order.service';
 })
 export class HomeComponent implements OnInit {
   parameters: ParametersModel = new ParametersModel();
-  customers: any;
+  customers: CustomerModel[];
 
-  constructor(private orderService: OrderService) {
+  constructor(private customerService: CustomerService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -20,11 +24,18 @@ export class HomeComponent implements OnInit {
   }
 
   getCustomers() {
-    this.orderService.getCustomers().subscribe(res => {
+    this.customerService.getCustomers().subscribe(res => {
       this.customers = res;
     });
   }
 
   submit() {
+    const pipe = new DatePipe('en-US');
+    const startDate = pipe.transform(this.parameters.startDate, 'yyyy-MM-dd');
+    const endDate = pipe.transform(this.parameters.endDate, 'yyyy-MM-dd');
+    this.router.navigateByUrl('/orders/'
+      + this.parameters.customerId +
+      '/' + startDate +
+      '/' + endDate);
   }
 }
