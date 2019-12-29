@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {OrderService} from '../services/order.service';
 import {ActivatedRoute} from '@angular/router';
 import {ParametersModel} from '../models/parameters.model';
-import {ItemModel} from '../models/item.model';
 import {MatDialog} from '@angular/material';
 import {ItemsDialogComponent} from './items-dialog/items-dialog.component';
 import {OrderModel} from '../models/order.model';
