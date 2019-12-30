@@ -1,21 +1,21 @@
-.main-content{
+.main-content {
   width: 40%;
-margin: auto;
+  margin: auto;
   height: 350px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   background-color: white;
 }
 
-.customer-form{
+.customer-form {
   text-align: center;
   margin: 20px 50px 20px 50px;
   padding: 20px;
 }
 
-.show-order-btn{
+.show-order-btn {
   margin-top: 20px;
 }
 
-mat-toolbar{
+mat-toolbar {
   font-weight: bold;
 }

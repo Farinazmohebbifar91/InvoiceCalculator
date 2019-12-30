@@ -13,7 +13,6 @@ export class ItemsDialogComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public dialogData) {
     this.items = this.dialogData.items;
   }
-
 }
 
 

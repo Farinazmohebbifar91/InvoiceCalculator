@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ParametersModel} from '../models/parameters.model';
-import {OrderService} from '../services/order.service';
 import {Router} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {CustomerModel} from '../models/customer.model';

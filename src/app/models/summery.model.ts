@@ -4,4 +4,5 @@ export interface SummeryModel {
   totalPrice: number;
   totalCharge: number;
   ordersCount: number;
+  totalAmount: number;
 }

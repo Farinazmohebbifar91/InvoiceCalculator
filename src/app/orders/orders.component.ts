@@ -8,6 +8,7 @@ import {SummeryModel} from '../models/summery.model';
 import * as moment from 'moment';
 import {ParametersModel} from '../models/parameters.model';
 import {SnackBarService} from '../core/snack-bar/snack-bar.service';
+import {combineLatest} from 'rxjs';
 
 @Component({
   selector: 'app-order',
@@ -25,34 +26,33 @@ export class OrdersComponent implements OnInit {
               private dialog: MatDialog,
               private snackBar: SnackBarService,
               private router: Router) {
-    this.paramRoute.params.subscribe((params: any) => {
-      this.params.customerId = params['customerId'];
-    });
-    this.paramRoute.queryParams
-      .subscribe(params => {
-        this.params.startDate = params.startDate;
-        this.params.endDate = params.endDate;
+    combineLatest(this.paramRoute.params, this.paramRoute.queryParams).subscribe(
+      ([params, queryParams]) => {
+        this.params.customerId = params.customerId;
+        this.params.startDate = queryParams.startDate;
+        this.params.endDate = queryParams.endDate;
+
+        if (this.paramsValidator()) {
+          this.getOrders();
+        }
       });
   }
 
   ngOnInit() {
-    if (this.paramsValidator()) {
-      this.getOrders();
-    }
   }
 
-  getOrders() {
+  getOrders(): void {
     this.orderService.getCustomerOrders(this.params).subscribe(data => {
       this.orders = data.orders;
       this.summery = data.summery;
     });
   }
 
-  orderSelected(row) {
+  orderSelected(row): void {
     this.selectedOrder = row;
   }
 
-  showItems(items) {
+  showItems(items): void {
     this.dialog.open(ItemsDialogComponent, {
       width: '800px',
       data: {
@@ -61,18 +61,15 @@ export class OrdersComponent implements OnInit {
     });
   }
 
-  paramsValidator() {
+  private paramsValidator(): boolean {
     let message;
-    const isGreater = moment(this.params.endDate).isSameOrAfter(moment(this.params.startDate));
-    if (!isGreater) {
-      message = 'start date is greater than end date';
-    }
-    if (!this.params.startDate || !moment(this.params.startDate).isValid() ||
-      !this.params.endDate || !moment(this.params.endDate).isValid()) {
-      message = 'date parameters are not valid';
-    }
     if (!this.params.customerId) {
       message = 'customer ID is not valid';
+    } else if (!this.params.startDate || !this.isDateValid(this.params.startDate) ||
+      !this.params.endDate || !this.isDateValid(this.params.endDate)) {
+      message = 'date parameters are not valid';
+    } else if (!this.isGreater()) {
+      message = 'start date is greater than end date';
     }
     if (message) {
       this.router.navigateByUrl('/home');
@@ -83,4 +80,11 @@ export class OrdersComponent implements OnInit {
     }
   }
 
+  private isDateValid(date): boolean {
+    return moment(date).isValid();
+  }
+
+  private isGreater(): boolean {
+    return moment(this.params.endDate).isSameOrAfter(moment(this.params.startDate));
+  }
 }

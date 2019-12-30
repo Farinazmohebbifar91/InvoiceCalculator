@@ -21,30 +21,35 @@ export class OrderService {
 
   // calculate total price of the order based on the total_price from each item
   calculateOrderPrice(orders): OrderModel[] {
-    orders.map(order => {
-      order.totalPrice = order.items.reduce((a: number, b) => {
-        return b.total_price.amount == null ? a : a + Number(b.total_price.amount);
-      }, 0);
+    return orders.map(order => {
+      return Object.assign(order, {
+        totalPrice: order.items.reduce((a: number, b) => {
+          return b.total_price.amount == null ? a : a + Number(b.total_price.amount);
+        }, 0),
+      });
     });
-    return orders;
   }
 
   calculateSummery(orders, params): ResultModel {
+    const totalPrice = orders.reduce((a: number, b) => {
+      return b.totalPrice == null ? a : a + Number(b.totalPrice);
+    }, 0);
+    const totalCharge = orders.reduce((a: number, b) => {
+      return b.charge_customer.total_price == null ? a : a + Number(b.charge_customer.total_price);
+    }, 0);
     const summery = {
       dateRange: params.startDate.toString() + '  To  ' + params.endDate.toString(),
       daysCount: this.getDaysCount(params),
       ordersCount: orders.length,
-      totalPrice: orders.reduce((a: number, b) => {
-        return b.totalPrice == null ? a : a + Number(b.totalPrice);
-      }, 0),
-      totalCharge: orders.reduce((a: number, b) => {
-        return b.charge_customer.total_price == null ? a : a + Number(b.charge_customer.total_price);
-      }, 0),
+      totalPrice,
+      totalCharge,
+      totalAmount: totalPrice - totalCharge,
     };
     return {orders, summery};
   }
 
-  getDaysCount(params): number {
+  private getDaysCount(params): number {
     return moment(params.endDate).diff(moment(params.startDate), 'days');
   }
+
 }
