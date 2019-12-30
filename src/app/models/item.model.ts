@@ -1,11 +1,11 @@
-export class ItemModel {
+export interface ItemModel {
   id: string;
   name: string;
   quantity: number;
   total_price: PriceModel;
 }
 
-class PriceModel {
+interface PriceModel {
   currency: string;
   amount: number;
 }

@@ -10,6 +10,16 @@ body {
   background-color: gainsboro;
 }
 
+.snack-bar-success {
+  color: white;
+  background-color: #0a6332;
+}
+
 .highlight {
   background-color: lightgray;
+}
+
+.snack-bar-error {
+  color: white;
+  background-color: #ff1744;
 }

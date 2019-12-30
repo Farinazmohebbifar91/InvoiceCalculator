@@ -9,19 +9,19 @@
       <div class="summery-detail">
         <div class="row">
           <div class="col-sm-3 label">Date Range:</div>
-          <div class="col-sm-3"></div>
+          <div class="col-sm-3">{{summery.dateRange}}</div>
           <div class="col-sm-3 label">Total Days:</div>
-          <div class="col-sm-3"></div>
+          <div class="col-sm-3">{{summery.daysCount}}</div>
         </div>
         <div class="row">
-          <div class="col-sm-3 label">total Price:</div>
-          <div class="col-sm-3">{{summery.invoiceAmount}}</div>
-          <div class="col-sm-3 label">Customer Charge:</div>
-          <div class="col-sm-3"></div>
+          <div class="col-sm-3 label">Total Price:</div>
+          <div class="col-sm-3">{{summery.totalPrice| currency:'EUR'}}</div>
+          <div class="col-sm-3 label">Total Charge:</div>
+          <div class="col-sm-3">{{summery.totalCharge| currency:'EUR'}}</div>
         </div>
         <div class="row">
-          <div class="col-sm-3 label">total amount:</div>
-          <div class="col-sm-3"></div>
+          <div class="col-sm-3 label">Total Amount:</div>
+          <div class="col-sm-3">{{summery.totalAmount| currency:'EUR'}}</div>
           <div class="col-sm-3 label">Number of Orders:</div>
           <div class="col-sm-3">{{summery.ordersCount}}</div>
         </div>
@@ -58,7 +58,7 @@
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef>View Items</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button mat-button title="Show Items" (click)="showItems(element)">
+          <button mat-button title="Show Items" (click)="showItems(element.items)">
             <i class="fa fa-eye"></i>
           </button>
         </mat-cell>

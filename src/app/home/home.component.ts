@@ -33,9 +33,9 @@ export class HomeComponent implements OnInit {
     const pipe = new DatePipe('en-US');
     const startDate = pipe.transform(this.parameters.startDate, 'yyyy-MM-dd');
     const endDate = pipe.transform(this.parameters.endDate, 'yyyy-MM-dd');
-    this.router.navigateByUrl('/orders/'
-      + this.parameters.customerId +
-      '/' + startDate +
-      '/' + endDate);
+    this.router.navigateByUrl(
+      this.router.createUrlTree(
+        ['/orders/' + this.parameters.customerId], {queryParams: {'startDate': startDate, 'endDate': endDate}}
+      ));
   }
 }

@@ -20,6 +20,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {FormsModule} from '@angular/forms';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatSnackBarModule} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -43,7 +44,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatPaginatorModule,
     FormsModule,
     MatFormFieldModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSnackBarModule,
   ],
   exports: [
     MatButtonModule,
@@ -64,7 +66,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatPaginatorModule,
     FormsModule,
     MatFormFieldModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSnackBarModule,
   ],
   providers: [
     MatDatepickerModule,

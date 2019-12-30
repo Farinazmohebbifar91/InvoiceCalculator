@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {OrderService} from '../services/order.service';
-import {ActivatedRoute} from '@angular/router';
-import {ParametersModel} from '../models/parameters.model';
+import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material';
 import {ItemsDialogComponent} from './items-dialog/items-dialog.component';
 import {OrderModel} from '../models/order.model';
 import {SummeryModel} from '../models/summery.model';
+import * as moment from 'moment';
+import {ParametersModel} from '../models/parameters.model';
+import {SnackBarService} from '../core/snack-bar/snack-bar.service';
 
 @Component({
   selector: 'app-order',
@@ -20,16 +22,23 @@ export class OrdersComponent implements OnInit {
 
   constructor(private orderService: OrderService,
               private paramRoute: ActivatedRoute,
-              private dialog: MatDialog) {
-    this.paramRoute.paramMap.subscribe(params => {
-      this.params.customerId = params.get('customerId');
-      this.params.startDate = new Date(params.get('startDate'));
-      this.params.endDate = new Date(params.get('endDate'));
+              private dialog: MatDialog,
+              private snackBar: SnackBarService,
+              private router: Router) {
+    this.paramRoute.params.subscribe((params: any) => {
+      this.params.customerId = params['customerId'];
     });
+    this.paramRoute.queryParams
+      .subscribe(params => {
+        this.params.startDate = params.startDate;
+        this.params.endDate = params.endDate;
+      });
   }
 
   ngOnInit() {
-    this.getOrders();
+    if (this.paramsValidator()) {
+      this.getOrders();
+    }
   }
 
   getOrders() {
@@ -43,14 +52,35 @@ export class OrdersComponent implements OnInit {
     this.selectedOrder = row;
   }
 
-  showItems(order) {
-    const dialogRef = this.dialog.open(ItemsDialogComponent, {
+  showItems(items) {
+    this.dialog.open(ItemsDialogComponent, {
       width: '800px',
       data: {
-        items: order.items
+        items
       }
     });
-    dialogRef.afterClosed().subscribe(res => {
-    });
   }
+
+  paramsValidator() {
+    let message;
+    const isGreater = moment(this.params.endDate).isSameOrAfter(moment(this.params.startDate));
+    if (!isGreater) {
+      message = 'start date is greater than end date';
+    }
+    if (!this.params.startDate || !moment(this.params.startDate).isValid() ||
+      !this.params.endDate || !moment(this.params.endDate).isValid()) {
+      message = 'date parameters are not valid';
+    }
+    if (!this.params.customerId) {
+      message = 'customer ID is not valid';
+    }
+    if (message) {
+      this.router.navigateByUrl('/home');
+      this.snackBar.showError(message);
+      return false;
+    } else {
+      return true;
+    }
+  }
+
 }

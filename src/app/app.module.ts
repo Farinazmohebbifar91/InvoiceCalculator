@@ -11,6 +11,7 @@ import {OrderService} from './services/order.service';
 import {CustomerService} from './services/customer.service';
 import {ItemsDialogComponent} from './orders/items-dialog/items-dialog.component';
 import {AngularMaterialModule} from './material.module';
+import {SnackBarService} from './core/snack-bar/snack-bar.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {AngularMaterialModule} from './material.module';
   ],
   providers: [
     CustomerService,
-    OrderService
+    OrderService,
+    SnackBarService
   ],
   entryComponents: [
     ItemsDialogComponent

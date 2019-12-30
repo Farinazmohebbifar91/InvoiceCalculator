@@ -1,7 +1,6 @@
 import {ItemModel} from './item.model';
-import {SummeryModel} from './summery.model';
 
-export class OrderModel {
+export interface OrderModel {
   id: string;
   recipient: RecipientModel;
   created_at: Date;
@@ -11,17 +10,17 @@ export class OrderModel {
   totalPrice: number;
 }
 
-export class RecipientModel {
+interface RecipientModel {
   name: string;
   email: string;
 }
 
-class DeliveryModel {
+interface DeliveryModel {
   courier: string;
   method: string;
 }
 
-class ChargeModel {
+interface ChargeModel {
   currency: string;
   total_price: number;
 }

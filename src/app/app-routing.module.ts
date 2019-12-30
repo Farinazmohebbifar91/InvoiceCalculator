@@ -8,8 +8,8 @@ const routes: Routes = [
   {
     path: 'home', component: HomeComponent},
   {
-    path: 'orders/:customerId/:startDate/:endDate',
-    component: OrdersComponent,
+    path: 'orders/:customerId',
+    component: OrdersComponent
   },
   {path: '', redirectTo: 'home', pathMatch: 'full'},
 ];
